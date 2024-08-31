@@ -1,0 +1,9 @@
+[Unit]
+Description=prometheus
+
+[Service]
+WorkingDirectory=/opt/alertmanager-{{alert_manager}}.linux-amd64
+ExecStart=/opt/alertmanager-{{alert_manager}}.linux-amd64/alertmanager
+
+[Install]
+WantedBy=multi-user.target

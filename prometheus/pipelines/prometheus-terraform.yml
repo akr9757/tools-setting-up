@@ -1,0 +1,30 @@
+pipelines:
+  prometheus-terraform:
+    group: tools
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      git-fe20804:
+        git: https://github.com/akr9757/tools-setting-up.git
+        shallow_clone: false
+        auto_update: true
+        branch: main
+    stages:
+      - DEV:
+          fetch_materials: true
+          approval:
+            type: manual
+          jobs:
+            terraform:
+              timeout: 0
+              tasks:
+                - exec:
+                    command: terraform
+                    arguments: ["init"]
+                    working_directory: prometheus
+
+                - exec:
+                    command: terraform
+                    arguments: [ "apply" "-auto-approve"]
+                    working_directory: prometheus

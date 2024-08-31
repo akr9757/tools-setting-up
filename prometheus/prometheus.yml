@@ -1,0 +1,5 @@
+- name: Setting Up a Expense Project
+  hosts: all
+  become: true
+  roles:
+    - prometheus
