@@ -21,6 +21,11 @@
     src: nginx.conf
     dest: /etc/nginx/nginx.conf
 
+- name: Copy Logstash Conf
+  ansible.builtin.template:
+    src: logstash.conf
+    dest: /etc/logstash/conf.d/logstash.conf
+
 - name: Start Elk Stack
   ansible.builtin.systemd:
     name: "{{ item }}"
