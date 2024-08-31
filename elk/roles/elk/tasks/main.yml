@@ -13,3 +13,14 @@
     name: elasticsearch
     state: started
     enabled: yes
+
+- name: Install Kibana
+  ansible.builtin.dnf:
+    name: kibana
+    state: installed
+
+- name: Start Kibana
+  ansible.builtin.systemd:
+    name: kibana
+    state: started
+    enabled: yes
