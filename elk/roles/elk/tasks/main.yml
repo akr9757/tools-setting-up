@@ -29,3 +29,13 @@
   ansible.builtin.dnf:
     name: nginx
     state: installed
+
+- name: Copy Nginx Conf
+  ansible.builtin.template:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+
+- name: Start Nginx
+  ansible.builtin.systemd:
+    name: nginx
+    state: started
