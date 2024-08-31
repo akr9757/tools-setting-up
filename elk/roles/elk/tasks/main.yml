@@ -6,39 +6,29 @@
     src: elastic.repo
     dest: /etc/yum.repos.d/elastic.repo
 
-- name: Install ElasticSearch
+- name: Install Elk Stack
   ansible.builtin.dnf:
-    name: elasticsearch
+    name: "{ { item } }"
     state: installed
-
-- name: Start ElasticSearch
-  ansible.builtin.systemd:
-    name: elasticsearch
-    state: started
-    enabled: yes
-
-- name: Install Kibana
-  ansible.builtin.dnf:
-    name: kibana
-    state: installed
-
-- name: Start Kibana
-  ansible.builtin.systemd:
-    name: kibana
-    state: started
-    enabled: yes
-
-- name: Install Nginx
-  ansible.builtin.dnf:
-    name: nginx
-    state: installed
+  loop:
+    - elasticsearch
+    - kibana
+    - logstash
+    - nginx
 
 - name: Copy Nginx Conf
   ansible.builtin.template:
     src: nginx.conf
     dest: /etc/nginx/nginx.conf
 
-- name: Start Nginx
+- name: Start Elk Stack
   ansible.builtin.systemd:
-    name: nginx
+    name: "{ { item } }"
     state: started
+    enabled: yes
+  loop:
+    - elasticsearch
+    - kibana
+    - logstash
+    - nginx
+
