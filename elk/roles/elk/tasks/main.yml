@@ -24,3 +24,8 @@
     name: kibana
     state: started
     enabled: yes
+
+- name: Install Nginx
+  ansible.builtin.dnf:
+    name: nginx
+    state: installed
