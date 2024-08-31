@@ -1,4 +1,4 @@
-- name: Setting Up a Expense Project
+- name: Setting Up a Elk
   hosts: all
   become: true
   roles:
