@@ -7,3 +7,9 @@
   ansible.builtin.dnf:
     name: elasticsearch
     state: installed
+
+- name: Start ElasticSearch
+  ansible.builtin.systemd:
+    name: elasticsearch
+    state: started
+    enabled: yes
