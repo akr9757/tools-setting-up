@@ -1,5 +1,5 @@
 - name: Set HostName
-  ansible>builtin.shell: set-hostname elastic
+  ansible.builtin.shell: set-hostname elastic
 
 - name: Copy Elastic Repo
   ansible.builtin.template:
