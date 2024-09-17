@@ -1,34 +1,27 @@
-resource "aws_lb" "test" {
-  name               = "test-lb-tf"
+resource "aws_lb" "tools" {
+  name               = local.name
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = [for subnet in aws_subnet.public : subnet.id]
+  security_groups    = [aws_security_group.main.id]
+  subnets            = data.aws_subnets.subnets.ids
 
-  enable_deletion_protection = true
-
-  access_logs {
-    bucket  = aws_s3_bucket.lb_logs.id
-    prefix  = "test-lb"
-    enabled = true
-  }
 
   tags = {
-    Environment = "production"
+    Environment = local.name
   }
 }
 
 resource "aws_security_group" "main" {
   name        = "${ local.name }-sg"
   description = "${ local.name }-sg"
-  vpc_id      = var.vpc_id
+  vpc_id      = "vpc-016b04b871ea2362c"
 
 
   ingress {
     from_port        = 80
     to_port          = 80
     protocol         = "tcp"
-    cidr_blocks      = var.sg_cidr_blocks
+    cidr_blocks      = ["0.0.0.0/0"]
     description      = "HTTP"
   }
 
@@ -36,7 +29,7 @@ resource "aws_security_group" "main" {
     from_port        = 443
     to_port          = 443
     protocol         = "tcp"
-    cidr_blocks      = var.sg_cidr_blocks
+    cidr_blocks      = ["0.0.0.0/0"]
     description      = "HTTPS"
   }
 
@@ -49,5 +42,39 @@ resource "aws_security_group" "main" {
 
   tags = {
     Name = "${ local.name }-sg"
+  }
+}
+
+resource "aws_lb_listener" "https" {
+  load_balancer_arn = aws_lb.tools.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = var.certificate_arn
+
+  default_action {
+    type = "fixed-response"
+
+    fixed_response {
+      content_type = "text/plain"
+      message_body = "404 page not found"
+      status_code  = "200"
+    }
+  }
+}
+
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.tools.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
   }
 }

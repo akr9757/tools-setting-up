@@ -4,4 +4,3 @@ data "aws_ami" "ami" {
   name_regex = "Centos-8-DevOps-Practice"
 }
 
-vpc-016b04b871ea2362c
