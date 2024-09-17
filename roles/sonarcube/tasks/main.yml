@@ -1,0 +1,28 @@
+- name: Add Sonarqube User
+  ansible.builtin.user:
+    name: sonarqube
+
+- name: Download And Unarchive
+  ansible.builtin.unarchive:
+    src: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.6.0.92116.zip
+    dest: /home/sonarqube
+    remote_src: yes
+    owner: sonarqube
+    group: sonarqube
+
+- name: Install Java
+  ansible.builtin.dnf:
+    name: java-17-openjdk.x86_64
+    state: installed
+
+- name: Copy Sonarqube Service File
+  ansible.builtin.template:
+    src: Sonarqube.service
+    dest: /etc/systemd/system/sonarqube.service
+
+
+- name: Start Sonarqube Service
+  ansible.builtin.systemd:
+    name: sonarqube
+    state: started
+    enabled: yes

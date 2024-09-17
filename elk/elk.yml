@@ -1,5 +1,0 @@
-- name: Setting Up a Elk
-  hosts: all
-  become: true
-  roles:
-    - elk

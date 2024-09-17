@@ -1,5 +1,5 @@
 pipelines:
-  prometheus-ans:
+  elk-ansible:
     group: tools
     label_template: ${COUNT}
     lock_behavior: none
@@ -20,9 +20,8 @@ pipelines:
               timeout: 0
               tasks:
                 - exec:
-                    working_directory: prometheus
                     command: bash
-                    arguments: ["ansible.sh"]
+                    arguments: ["ansible.sh", "elk"]
 
 
 

@@ -1,5 +1,5 @@
 pipelines:
-  elk-terraform:
+  sonarqube-ansible:
     group: tools
     label_template: ${COUNT}
     lock_behavior: none
@@ -11,20 +11,17 @@ pipelines:
         auto_update: true
         branch: main
     stages:
-      - DEV:
+      - apply:
           fetch_materials: true
           approval:
             type: manual
           jobs:
-            terraform:
+            apply:
               timeout: 0
               tasks:
                 - exec:
-                    command: terraform
-                    arguments: ["init"]
-                    working_directory: elk
+                    command: bash
+                    arguments: ["ansible.sh", "sonarqube"]
 
-                - exec:
-                    command: terraform
-                    arguments: [ "apply" "-auto-approve"]
-                    working_directory: elk
+
+
