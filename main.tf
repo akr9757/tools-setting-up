@@ -10,6 +10,8 @@ module "ec2" {
 
   port     = each.value["port"]
   priority = each.value["priority"]
+
+  policy_list = each.value["policy_list"]
 }
 
 module "alb-tools" {
