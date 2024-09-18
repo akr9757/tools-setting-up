@@ -1,0 +1,25 @@
+- name: Unarchive and Install Alert Manager
+  ansible.builtin.unarchive:
+    src: https://github.com/prometheus/alertmanager/releases/download/v{{alert_manager}}/alertmanager-{{alert_manager}}.linux-amd64.tar.gz
+    dest: /opt
+    remote_src: yes
+
+- name: Copy Alert Manager file
+  ansible.builtin.template:
+    src: alertmanager.yml
+    dest: /opt/alertmanager-{{alert_manager}}.linux-amd64/alertmanager.yml
+
+- name: Copy Alert Manager Service
+  ansible.builtin.template:
+    src: alertmanager.service
+    dest: /etc/systemd/system/alertmanager.service
+
+- name: Start Service Alert Manager
+  ansible.builtin.systemd:
+    name: alertmanager
+    state: restarted
+    enabled: yes
+    daemon-reload: yes
+
+- name: Wait For Alert Manager Port
+  ansible.builtin.shell: sleep 10 ; netstat -lntp | grep 9093
