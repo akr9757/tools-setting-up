@@ -4,3 +4,4 @@ variable "dns_name" {}
 variable "listener_arn" {}
 variable "priority" {}
 variable "port" {}
+variable "policy_list" {}
