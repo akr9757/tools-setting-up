@@ -15,17 +15,15 @@ variable "tools" {
       port          = 80
       priority      = 102
     }
-    alert_manager = {
+    alertmanager = {
       instance_type = "t3.small"
       port          = 9093
       priority      = 103
-
     }
     grafana = {
       instance_type = "t3.small"
       port          = 3000
       priority      = 104
-
     }
   }
 }
