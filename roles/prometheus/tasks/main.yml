@@ -27,27 +27,23 @@
     daemon-reload: yes
 
 - name: Wait For Prometheus Port
-  ansible.builtin.shell: sleep ; netstat -lntp | grep 9090
+  ansible.builtin.shell: sleep 10 ; netstat -lntp | grep 9090
 
-# - name: Check Service Grafana
-#   ansible.builtin.systemd:
-#     name: grafana
-#     state: started
-#     enabled: yes
-#   register: out
-#   ignore_errors: true
-
+- name: Copy Grafana Repo
+  ansible.builtin.template:
+    src: grafana.repo
+    dest: /etc/yum.repos.d/grafana.repo
 
 - name: Install Grafana
-  ansible.builtin.shell: yum install -y https://dl.grafana.com/enterprise/release/grafana-enterprise-11.2.0-1.x86_64.rpm
-  # when: out.status.ActiveState != "active"
+  ansible.builtin.dnf:
+    name: grafana-enterprise
+    state: installed
 
 - name: Start Service Grafana
   ansible.builtin.systemd:
     name: grafana-server
     state: restarted
     enabled: yes
-  # when: out.status.ActiveState != "active"
 
 # - name: Copy Grafana Dashboard File
 #   ansible.builtin.copy:
@@ -88,4 +84,4 @@
     daemon-reload: yes
 
 - name: Wait For Alert Manager Port
-  ansible.builtin.shell: sleep ; netstat -lntp | grep 9093
+  ansible.builtin.shell: sleep 10 ; netstat -lntp | grep 9093
