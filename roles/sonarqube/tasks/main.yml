@@ -17,7 +17,7 @@
 
 - name: Copy Sonarqube Service File
   ansible.builtin.template:
-    src: Sonarqube.service
+    src: Sonar.service
     dest: /etc/systemd/system/sonarqube.service
 
 
