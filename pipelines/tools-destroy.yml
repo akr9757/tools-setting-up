@@ -21,4 +21,9 @@ pipelines:
               tasks:
                 - exec:
                     command: terraform
+                    arguments: [ "init" ]
+
+
+                - exec:
+                    command: terraform
                     arguments: [ "destroy" "-auto-approve" ]
