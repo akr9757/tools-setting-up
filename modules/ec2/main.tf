@@ -66,6 +66,10 @@ resource "aws_lb_target_group_attachment" "main" {
 resource "aws_iam_instance_profile" "main" {
   name = "${var.tool_name}-profile"
   role = aws_iam_role.main.name
+
+  lifecycle {
+    ignore_changes = [name]
+  }
 }
 
 
