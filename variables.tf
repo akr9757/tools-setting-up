@@ -32,7 +32,7 @@ variable "tools" {
     }
     artifactory = {
       instance_type = "t3.medium"
-      port          = 8081
+      port          = 8082
       priority      = 105
       policy_list   = []
     }
