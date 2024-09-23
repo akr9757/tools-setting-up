@@ -1,7 +1,7 @@
 - name: Unarchive and Install Alert Manager
   ansible.builtin.unarchive:
-    src: https://releases.jfrog.io/artifactory/artifactory-rpms/artifactory-rpms.repo
-    dest: /etc/yum.repos.d/artifactory-rpms.repo
+    src: https://releases.jfrog.io/artifactory/artifactory-rpms/artifactory-rpms.repo -O jfrog-artifactory-rpms.repo
+    dest: /etc/yum.repos.d/jfrog-artifactory-rpms.repo
     remote_src: yes
 
 - name: Install Java and Jfrog
