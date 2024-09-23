@@ -19,8 +19,6 @@
   ansible.builtin.template:
     src: sonarqube.service
     dest: /etc/systemd/system/sonarqube.service
-    remote_src: yes
-
 
 - name: Start Sonarqube Service
   ansible.builtin.systemd:
