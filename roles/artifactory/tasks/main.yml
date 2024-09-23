@@ -2,7 +2,6 @@
   ansible.builtin.template:
     src: artifactory.repo
     dest: /etc/yum.repos.d/artifactory.repo
-    remote_src: yes
 
 - name: Install Java and Jfrog
   ansible.builtin.dnf:
