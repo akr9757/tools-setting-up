@@ -14,7 +14,7 @@ resource "aws_lb" "tools" {
 resource "aws_security_group" "main" {
   name        = "${ local.name }-sg"
   description = "${ local.name }-sg"
-  vpc_id      = "vpc-016b04b871ea2362c"
+  vpc_id      = var.vpc_id
 
 
   ingress {
